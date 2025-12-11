@@ -1,13 +1,45 @@
-import { useState } from 'react'
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import { useEffect, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.css"
 import './App.css'
+import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom'
+import DefaultLayout from './Layouts/DefaultLayout'
+import Home from './pages/Home'
+import Prodotti from './pages/Prodotti'
+import Prodotto from './pages/Prodotto'
+import axios from 'axios'
+import Chisiamo from './pages/Chi-siamo'
+import ProdottoLayout from './Layouts/ProdottoLayout'
+import { BudgetProvider } from './Context/PreferitiContext'
+
 
 function App() {
+  const [prodotti, setProdotti] = useState([])
+  function fetchProdotti() {
+    axios.get("https://fakestoreapi.com/products")
+      .then((resp) => {
+        setProdotti(resp.data)
+      })
+  }
+  useEffect(() => {
+    fetchProdotti()
+  }, [])
 
   return (
     <>
-
+      <BudgetProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<DefaultLayout />}>
+              <Route path='/' element={<Home />} />
+              <Route path='/chi-siamo' element={<Chisiamo />} />
+              <Route path='/prodotti' element={<Prodotti prodotti={prodotti} />} />
+            </Route>
+            <Route element={<ProdottoLayout prodotti={prodotti} />}>
+              <Route path='/prodotti/:id' element={<Prodotto prodotti={prodotti} />} />
+            </Route>
+          </Routes>
+        </BrowserRouter >
+      </BudgetProvider>
     </>
   )
 }
