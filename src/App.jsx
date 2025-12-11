@@ -9,12 +9,13 @@ import Prodotto from './pages/Prodotto'
 import axios from 'axios'
 import Chisiamo from './pages/Chi-siamo'
 import ProdottoLayout from './Layouts/ProdottoLayout'
-import { BudgetProvider } from './Context/PreferitiContext'
+import { BudgetProvider, useBudget } from './Context/PreferitiContext'
 import NotFound from './Pages/NotFound'
 
 
-function App() {
-  const [prodotti, setProdotti] = useState([])
+function AppContent() {
+  const [prodotti, setProdotti] = useState([]);
+  const { budgetMode } = useBudget();
   function fetchProdotti() {
     axios.get("https://fakestoreapi.com/products")
       .then((resp) => {
@@ -23,27 +24,31 @@ function App() {
   }
   useEffect(() => {
     fetchProdotti()
-  }, [])
+  }, [budgetMode])
 
   return (
-    <>
-      <BudgetProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<DefaultLayout />}>
-              <Route path='/' element={<Home />} />
-              <Route path='/chi-siamo' element={<Chisiamo />} />
-              <Route path='/prodotti' element={<Prodotti prodotti={prodotti} />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-            <Route element={<ProdottoLayout prodotti={prodotti} />}>
-              <Route path='/prodotti/:id' element={<Prodotto prodotti={prodotti} />} />
-            </Route>
-          </Routes>
-        </BrowserRouter >
-      </BudgetProvider>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route element={<DefaultLayout />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/chi-siamo' element={<Chisiamo />} />
+          <Route path='/prodotti' element={<Prodotti prodotti={prodotti} budgetMode={budgetMode} />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+        <Route element={<ProdottoLayout prodotti={prodotti} />}>
+          <Route path='/prodotti/:id' element={<Prodotto prodotti={prodotti} />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function App() {
+  return (
+    <BudgetProvider>
+      <AppContent />
+    </BudgetProvider>
+  );
 }
 
 export default App

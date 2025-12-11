@@ -1,12 +1,19 @@
 import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
-export default function Prodotti({ prodotti }) {
+export default function Prodotti({ prodotti, budgetMode }) {
+    const prodottiFiltrati = budgetMode
+        ? prodotti.filter((prodotto) => prodotto.price <= 30)
+        : prodotti;
+
+
+
+
     return (
         <>
             <h2>benvenuto nei prodotti</h2>
             <ul>
-                {Array.isArray(prodotti) && prodotti.length > 0 ? (
-                    prodotti.map((prodotto, index) => (
+                {Array.isArray(prodottiFiltrati) && prodottiFiltrati.length > 0 ? (
+                    prodottiFiltrati.map((prodotto, index) => (
                         <li key={index} className="d-flex align-items-center">
                             <div className="sinistro">
                                 <img src={prodotto.image} alt="" />

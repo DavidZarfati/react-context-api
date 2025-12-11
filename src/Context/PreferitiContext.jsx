@@ -17,10 +17,20 @@ function BudgetProvider({ children }) {
     function removeBudget(idPersonaggio) {
         console.log("removeBudget");
     }
+
+    function changeBudget() {
+        setBudgetMode(!budgetMode)
+        console.log(budgetMode);
+
+    }
+
+
     const contextValue = {
         isBudget,
         addBudget,
         removeBudget,
+        changeBudget,
+        budgetMode,
     };
 
     return (
