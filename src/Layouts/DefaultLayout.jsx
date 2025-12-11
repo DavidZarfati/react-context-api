@@ -6,9 +6,9 @@ export default function DefaultLayout() {
     return (
         <>
             <div className="d-flex">
-                <div className="navbar">
-                    <Header />
-                </div>
+                {/* <div className="navbar"> */}
+                <Header />
+                {/* </div> */}
                 <div className="contenuto">
                     <main>
                         <Outlet />

@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
+import "bootstrap/dist/css/bootstrap.css"
 export default function Prodotti({ prodotti, budgetMode }) {
     const prodottiFiltrati = budgetMode
         ? prodotti.filter((prodotto) => prodotto.price <= 30)
@@ -10,31 +11,32 @@ export default function Prodotti({ prodotti, budgetMode }) {
 
     return (
         <>
-            <h2>benvenuto nei prodotti</h2>
-            <ul>
+
+            <div className="row row-cols-3 h-100">
                 {Array.isArray(prodottiFiltrati) && prodottiFiltrati.length > 0 ? (
                     prodottiFiltrati.map((prodotto, index) => (
-                        <li key={index} className="d-flex align-items-center">
-                            <div className="sinistro">
-                                <img src={prodotto.image} alt="" />
+                        <div className="col card mb-3" key={index}>
+                            <div className="row g-0">
+                                <div className="col-md-4">
+                                    <img src={prodotto.image} className="img-fluid rounded-start" alt={prodotto.title} />
+                                </div>
+                                <div className="col-md-8">
+                                    <div className="card-body">
+                                        <h5 className="card-title">{prodotto.title}</h5>
+                                        <p className="card-text">{prodotto.description}</p>
+                                        <p className="card-text"><small class="text-muted">prezzo : {prodotto.price}$</small></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="destro p-2">
-                                <h3>prodotto : {prodotto.title}</h3>
-                                <h5>prezzo : {prodotto.price}$ </h5>
-                                <h6>descrizione : {prodotto.description}</h6>
-                                <NavLink
-                                    to={`/prodotti/${prodotto.id}`}
-                                    className="prodotto-link"
-                                >
-                                    {prodotto.title}
-                                </NavLink>
-                            </div>
-                        </li>
+                        </div>
+
+
                     ))
                 ) : (
                     <p>Nessun prodotto disponibile.</p>
                 )}
-            </ul>
+
+            </div>
         </>
     )
 }
