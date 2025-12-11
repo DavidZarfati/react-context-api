@@ -6,15 +6,16 @@ function BudgetProvider({ children }) {
     const [budgetMode, setBudgetMode] = useState(false);
 
     function isBudget(idPersonaggio) {
-        return Budget.includes(idPersonaggio);
+        console.log("isBudget");
+
     }
 
     function addBudget(idPersonaggio) {
-        setBudget((current) => [...current, idPersonaggio]);
+        console.log("addBudget");
     }
 
     function removeBudget(idPersonaggio) {
-        setBudget((current) => current.filter((id) => id !== idPersonaggio));
+        console.log("removeBudget");
     }
     const contextValue = {
         isBudget,
