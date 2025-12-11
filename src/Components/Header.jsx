@@ -1,6 +1,9 @@
 import styles from "./HeaderModule.module.css"
 import { NavLink } from "react-router-dom"
+import { useBudget } from "../Context/PreferitiContext"
 export default function Header() {
+    const { isBudget, addBudget, removeBudget, changeBudget } = useBudget();
+
     const navLinks = [
         {
             title: "Home",
@@ -28,6 +31,7 @@ export default function Header() {
                         </li>
                     ))}
                 </ul>
+                <button onClick={changeBudget}>Bottone di Test effettivo</button>
                 <ul>
                     {/* Sezione secondaria, puoi aggiungere altri <NavLink> qui se necessario */}
                 </ul>
