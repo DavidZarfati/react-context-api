@@ -10,6 +10,7 @@ import axios from 'axios'
 import Chisiamo from './pages/Chi-siamo'
 import ProdottoLayout from './Layouts/ProdottoLayout'
 import { BudgetProvider } from './Context/PreferitiContext'
+import NotFound from './Pages/NotFound'
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/chi-siamo' element={<Chisiamo />} />
               <Route path='/prodotti' element={<Prodotti prodotti={prodotti} />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
             <Route element={<ProdottoLayout prodotti={prodotti} />}>
               <Route path='/prodotti/:id' element={<Prodotto prodotti={prodotti} />} />
